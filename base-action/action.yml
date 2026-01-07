@@ -107,6 +107,17 @@ runs:
       with:
         bun-version: 1.2.11
 
+    - name: Cache Bun dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.bun/install/cache
+            ~/.bun/install/global
+            ~/.bun/bin
+          key: bun-claude-code-${{ runner.os }}-${{ hashFiles('**/bun.lockb') }}
+          restore-keys: |
+            bun-claude-code-${{ runner.os }}
+
     - name: Install Dependencies
       shell: bash
       run: |
@@ -131,7 +142,11 @@ runs:
         # Model configuration
         CLAUDE_CODE_ACTION: "1"
         ANTHROPIC_MODEL: ${{ inputs.model || inputs.anthropic_model }}
-        INPUT_PROMPT: ${{ inputs.prompt }}
+        INPUT_PROMPT: |
+            You are a participant in a pull request.  If you have been tagged by someone, do your best
+            to answer them.  Othewise, please provide a thorough review of this pull request.
+            Pay extra attention to coding standards, security practices,
+            and test coverage.
         INPUT_PROMPT_FILE: ${{ inputs.prompt_file }}
         INPUT_ALLOWED_TOOLS: ${{ inputs.allowed_tools }}
         INPUT_DISALLOWED_TOOLS: ${{ inputs.disallowed_tools }}
