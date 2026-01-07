@@ -50,7 +50,11 @@ inputs:
   direct_prompt:
     description: "Direct instruction for Claude (bypasses normal trigger detection)"
     required: false
-    default: ""
+    default:  |
+            You are a participant in a pull request.  If you have been tagged by someone, do your best
+            to answer them.  Othewise, please provide a thorough review of this pull request.
+            Pay extra attention to coding standards, security practices,
+            and test coverage.
   override_prompt:
     description: "Complete replacement of Claude's prompt with custom template (supports variable substitution)"
     required: false
