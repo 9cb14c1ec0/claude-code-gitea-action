@@ -107,17 +107,6 @@ runs:
       with:
         bun-version: 1.2.11
 
-    - name: Cache Bun dependencies
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.bun/install/cache
-            ~/.bun/install/global
-            ~/.bun/bin
-          key: bun-claude-code-${{ runner.os }}-${{ hashFiles('**/bun.lockb') }}
-          restore-keys: |
-            bun-claude-code-${{ runner.os }}
-
     - name: Install Dependencies
       shell: bash
       run: |
